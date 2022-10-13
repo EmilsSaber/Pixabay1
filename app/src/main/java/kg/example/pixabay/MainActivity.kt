@@ -3,14 +3,11 @@ package kg.example.pixabay
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kg.example.pixabay.adapter.ImageAdapter
 import kg.example.pixabay.app.App
 import kg.example.pixabay.databinding.ActivityMainBinding
-import kg.example.pixabay.model.ImageModel
 import kg.example.pixabay.model.PixModel
-import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                 if (!recyclerView.canScrollVertically(1)) {
                     doRequest()
                     ++page
-
                 }
             }
         })
@@ -54,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PixModel>, response: Response<PixModel>) {
                 if (response.isSuccessful) {
                     Log.e("ololo", "onResponse: ${response.body()?.hits!![0].largeImageURL}")
-                    val list  = arrayListOf<ImageModel>()
+
                     response.body()?.hits?.forEach{
                         imageAdapter.addImage(it)
                     }
